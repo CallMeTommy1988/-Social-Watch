@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
+import { store } from "@redux/index"
 import { Provider } from "react-redux";
-import { Router } from "react-router-dom";
-import history from "./utils/history";
+import { router } from "routes/index"
+import { RouterProvider} from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Provider {...stores}>
-      <Router history={history}>
-
-      </Router>
+    <Provider store={store}>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );

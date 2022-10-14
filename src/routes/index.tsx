@@ -1,16 +1,10 @@
-import * as React from "react";
-import { Switch, Route } from "react-router-dom";
 
-export default function Routes() {
+import { createBrowserRouter } from "react-router-dom";
+import Login from "@components/Login"
 
-    return (
-        <React.Suspense
-            fallback={<div>正在加载...</div>}
-        >
-            <Switch>
-                <Route path="/" component={Login} />
-            </Switch>
-        </React.Suspense>
-    );
-
-}
+export const router = createBrowserRouter([
+    {
+        path: "/login",
+        element: <Login />
+    }
+])
