@@ -1,6 +1,6 @@
 import http from "..";
 import { outer } from "../config/serviceName";
-import { ILogin, IRegister } from "@api/interface";
+import { ILogin, IRegister } from "../../api/interface";
 
 export const login = (params: ILogin.ReqLoginForm) => {
     return http.post<ILogin.ResLogin>(`${outer}/login`, params);

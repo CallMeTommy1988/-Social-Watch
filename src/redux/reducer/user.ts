@@ -1,13 +1,13 @@
 import md5 from "js-md5"
 import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit"
-import * as outerService from "@api/modules/outer"
-import * as userService from "@api/modules/user"
-import { ILogin } from "@api/interface";
-import { userState } from "@api/interface/user";
-import { localSet, localGet } from "@utils/util"
+import * as outerService from "../../api/modules/outer"
+import * as userService from "../../api/modules/user"
+import { ILogin } from "../../api/interface";
+import { userState } from "../../api/interface/user";
+import { localSet, localGet } from "../../utils/util"
 
 export const name = "outerWorkflow";
-const tokenKey = "wToken";
+export const tokenKey = "wToken";
 
 //login
 const loginType = `${name}/login`;

@@ -3,10 +3,12 @@ import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } f
 import { showFullScreenLoading, tryHideFullScreenLoading } from "../config/serviceLoading";
 import { ResultData } from "../api/interface";
 import { ResultEnum } from "../enums/httpEnum";
-import { checkStatus } from "./helper/checkStatus";
-import { AxiosCanceler } from "./helper/axiosCancel";
+import { checkStatus } from "../api/helper/checkStatus";
+import { AxiosCanceler } from "../api/helper/axiosCancel";
 import { message } from "antd";
-import systemCofnig from "../../config";
+import systemCofnig from "../config";
+import { localGet } from "../utils/util";
+import { tokenKey } from "../redux/reducer/user"
 
 const axiosCanceler = new AxiosCanceler();
 
@@ -34,8 +36,10 @@ class RequestHttp {
 				axiosCanceler.addPending(config);
 				// * 如果当前请求不需要显示 loading,在api服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading，参见
 				config.headers!.noLoading || showFullScreenLoading();
-				const token: string = store.getState().global.token;
-				return { ...config, headers: { ...config.headers, "x-access-token": token } };
+
+
+				const token: string = localGet(tokenKey);
+				return { ...config, headers: { ...config.headers, "authorization": token } };
 			},
 			(error: AxiosError) => {
 				return Promise.reject(error);
@@ -54,8 +58,7 @@ class RequestHttp {
 				axiosCanceler.removePending(config);
 				tryHideFullScreenLoading();
 				// * 登录失效（code == 599）
-				if (data.code == ResultEnum.OVERDUE) {
-					store.dispatch(setToken(""));
+				if (data.code === ResultEnum.OVERDUE) {
 					message.error(data.msg);
 					window.location.hash = "/login";
 					return Promise.reject(data);
