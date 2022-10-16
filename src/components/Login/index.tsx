@@ -1,7 +1,17 @@
 import { Col, Row, Button, Checkbox, Form, Input, Space } from 'antd';
+import { useEffect, useState } from 'react';
+import * as outerService from "api/modules/outer"
 
 
 export default function Login() {
+
+    const [captchaContent, setCaptchaContent] = useState("");
+    const getCaptcha = () => {
+        outerService.captcha().then(res => {
+            if(res.code === 200) 
+        })
+    }
+
 
     return (
         <>
