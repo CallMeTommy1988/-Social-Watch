@@ -4,5 +4,6 @@ import userSlice from "../redux/reducer/user"
 export const store = configureStore({
     reducer: {
         user: userSlice
-    }
+    },
+    devTools: true
 })

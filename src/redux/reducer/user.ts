@@ -6,27 +6,29 @@ import { ILogin } from "../../api/interface";
 import { userState } from "../../api/interface/user";
 import { localSet, localGet } from "../../utils/util"
 
+
 export const name = "outerWorkflow";
 export const tokenKey = "wToken";
 
-//login
 const loginType = `${name}/login`;
-
-//fetchUser
 const fetchUserType = `${name}/fetchUser`
+const setTokenType = `${name}/setToken`;
 
-
-export const login = createAsyncThunk(loginType, async (params: ILogin.ReqLoginForm) => {
-    params.password = md5(params.password);
+const login = createAsyncThunk(loginType, async (params: ILogin.ReqLoginForm) => {
+    params.passwd = md5(params.passwd);
     const res = await outerService.login(params);
     return res;
 });
 
-export const fetchCurrentUser = createAsyncThunk(fetchUserType, async () => {
+const fetchCurrentUser = createAsyncThunk(fetchUserType, async () => {
     const res = await userService.fetchCurrentUser();
     return res;
-
 })
+
+export const setToken = createAsyncThunk(setTokenType, (payload: string, action) => {
+    action.dispatch(user.actions.addToken(payload));
+    localSet(tokenKey, payload);
+});
 
 const initialState: userState = {
     user: undefined,
@@ -58,6 +60,8 @@ export const user = createSlice({
         })
     },
 });
+
+export const { addUser, addToken } = user.actions; 
 
 export const selectorUserToken = (state: userState) => { 
     if(!!state.token) return state.token;

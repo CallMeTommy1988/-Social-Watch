@@ -52,6 +52,8 @@
     "@types/node": "^16.11.62",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6"
-  }
+    "@types/react-dom": "^18.0.6",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "proxy": "http://127.0.0.1:3001"
 }

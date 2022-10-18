@@ -13,7 +13,6 @@ import { tokenKey } from "../redux/reducer/user"
 const axiosCanceler = new AxiosCanceler();
 
 const config = {
-	baseURL: systemCofnig.api.baseUrl,
 	timeout: 10000,
 	withCredentials: true
 };
@@ -37,11 +36,17 @@ class RequestHttp {
 				// * 如果当前请求不需要显示 loading,在api服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading，参见
 				config.headers!.noLoading || showFullScreenLoading();
 
-
 				const token: string = localGet(tokenKey);
-				return { ...config, headers: { ...config.headers, "authorization": token } };
+				if (!!token) {
+					return { ...config, headers: { ...config.headers, "authorization": token } };
+				}
+				else {
+					return { ...config, headers: { ...config.headers } };
+				}
 			},
 			(error: AxiosError) => {
+				console.log("error info2")
+				console.log(error);
 				return Promise.reject(error);
 			}
 		);
@@ -73,6 +78,7 @@ class RequestHttp {
 			},
 			async (error: AxiosError) => {
 				const { response } = error;
+
 				NProgress.done();
 				tryHideFullScreenLoading();
 				// 请求超时单独判断，请求超时没有 response
@@ -81,6 +87,8 @@ class RequestHttp {
 				if (response) checkStatus(response.status);
 				// 服务器结果都没有返回(可能服务器错误可能客户端断网) 断网处理:可以跳转到断网页面
 				if (!window.navigator.onLine) window.location.hash = "/500";
+				console.log("error info1")
+				console.log(error);
 				return Promise.reject(error);
 			}
 		);
@@ -88,6 +96,10 @@ class RequestHttp {
 
 	// * 常用请求方法封装
 	get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+		console.log("get params")
+		console.log(url);
+		console.log(params);
+		console.log(_object);
 		return this.service.get(url, { params, ..._object });
 	}
 	post<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {

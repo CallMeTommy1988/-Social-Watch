@@ -29,7 +29,7 @@ export interface ReqPage {
 export namespace ILogin {
 	export interface ReqLoginForm {
 		email: string;
-		password: string;
+		passwd: string;
         captcha: string
 	}
 	export interface ResLogin {
@@ -44,7 +44,7 @@ export namespace ILogin {
 export namespace IRegister {
     export interface ReqRegisterForm {
         email: string;
-        password: string;
+        passwd: string;
         captcha: string;
     }
 }
