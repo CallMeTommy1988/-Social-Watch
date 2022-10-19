@@ -33,7 +33,7 @@ export namespace ILogin {
         captcha: string
 	}
 	export interface ResLogin {
-		token: string;
+		token?: string;
 	}
 	export interface ResUser {
 		user: user;

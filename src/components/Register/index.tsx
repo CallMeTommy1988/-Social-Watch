@@ -31,11 +31,11 @@ export default function RegisterWorkFlow() {
     return (
         <>
             <Row className='registerSection'>
-                <Col className="content" xs={24} sm={20} md={18} lg={18}>
+                <Col className="content" xs={24} sm={18} md={14} lg={10}>
                     <RegisterStep className="registerStep" current={step} />
-                    <div className="outletContent">
+                    <Col className="outletContent" xs={24} sm={18} md={14} lg={12}>
                         <Outlet />
-                    </div>
+                    </Col>
                 </Col>
             </Row>
         </>

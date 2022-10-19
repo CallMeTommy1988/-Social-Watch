@@ -1,3 +1,5 @@
+body  {}
+
 .outerBody {
   display: flex;
   align-items: center;
@@ -33,5 +35,4 @@ width: 100%;
 
 .registerSection .content .outletContent {
   margin: 0 auto;
-  width: 80%
 }

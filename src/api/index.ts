@@ -45,8 +45,6 @@ class RequestHttp {
 				}
 			},
 			(error: AxiosError) => {
-				console.log("error info2")
-				console.log(error);
 				return Promise.reject(error);
 			}
 		);
@@ -70,7 +68,7 @@ class RequestHttp {
 				}
 				// * 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
 				if (data.code && data.code !== ResultEnum.SUCCESS) {
-					message.error(data.msg);
+					message.error(data.msg || "服务器内部错误");
 					return Promise.reject(data);
 				}
 				// * 成功请求（在页面上除非特殊情况，否则不用处理失败逻辑）
@@ -103,6 +101,10 @@ class RequestHttp {
 		return this.service.get(url, { params, ..._object });
 	}
 	post<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+		console.log("post params")
+		console.log(url);
+		console.log(params);
+		console.log(_object);
 		return this.service.post(url, params, _object);
 	}
 	put<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {

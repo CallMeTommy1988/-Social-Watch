@@ -1,22 +1,34 @@
 import { Result, Button } from "antd";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
+import { regVaild } from "../../api/modules/outer"
 
 const Finish = () => {
 
     const navigate = useNavigate();
     const [result, setResult] = useState(0);
-    const { id, time, content } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const id = searchParams.get("id");
+    const content = searchParams.get("content");
+    const time = searchParams.get("time");
 
-    if (!!id && !!time && !!content) {
+    useEffect(() => {
 
-        //连接确认参数
-        //设置等待返回
+        if (!!id && !!time && !!content) {
 
-    }
-    else {
-        setResult(2);
-    }
+            regVaild({ id, time, content }).then(res => {
+                setResult(res.code === 200 ? 1 : 2);
+            }, reject => {
+                setResult(2);
+            })
+
+        }
+        else {
+            setResult(2);
+        }
+
+    }, [id, time, content])
 
     return (
         <>

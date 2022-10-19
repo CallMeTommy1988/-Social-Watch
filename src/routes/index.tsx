@@ -4,7 +4,7 @@ import Login from "../components/Login";
 import RegisterWorkFlow from "../components/Register"
 import RegisterForm from "../components/Register/register.form"
 import RegisterSuccessForm from "../components/Register/success";
-import RegisterFinishForm from "../components/Register/"
+import RegisterFinishForm from "../components/Register/finish"
 
 export const router = createBrowserRouter([
     {

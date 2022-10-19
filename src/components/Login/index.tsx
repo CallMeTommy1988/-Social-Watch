@@ -23,21 +23,20 @@ export default function Login() {
             setFormEnable(false);
             loginForm.passwd = md5(loginForm.passwd);
 
-            //提交
-            const res = await outerService.login(loginForm);
-            if (res.code === 200) {
+            outerService.login(loginForm).then(res => {
                 const token = res.data?.token;
                 dispatch(setToken(token || ""));
                 message.success("登录成功!");
                 setTimeout(() => {
                     navigate("/main");
                 }, 1000);
-            }
-            else {
+            }, reject => {
                 setTimespan((new Date()).getTime());
-                message.error(res.msg);
-            }
+            })
 
+        }
+        catch(ex) {
+            console.error(ex);
         }
         finally {
             setFormEnable(true);

@@ -15,21 +15,20 @@ const RegisterForm = () => {
     const registerForm = async (registerForm: IRegister.ReqRegisterForm) => {
 
         try {
-            setFormEnable(true);
+            setFormEnable(false);
             registerForm.passwd = md5(registerForm.passwd);
 
-            const res = await outerService.reg(registerForm);
-            if (res.code === 200) {
-                //注册成功
-                //跳转到step2
+            outerService.reg(registerForm).then(res => {
                 navigate("/reg/success");
-            }
-            else {
-                message.error(res.msg);
+            }, reject => {
                 setTimespan((new Date()).getTime());
-            }
-        } finally {
-            setFormEnable(false);
+            })
+        }
+        catch(ex) {
+            console.log(ex);
+        } 
+        finally {
+            setFormEnable(true);
         }
     }
 
