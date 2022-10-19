@@ -3,44 +3,30 @@ import md5 from "js-md5"
 import { useNavigate } from "react-router"
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/reducer/user';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as outerService from "api/modules/outer"
 import { ILogin } from '@/api/interface';
+import Captcha from '../common/captcha';
 
 
 export default function Login() {
 
-    const [captchaContent, setCaptchaContent] = useState("");
     const [formEnable, setFormEnable] = useState<boolean>(true);
+    const [timespan, setTimespan] = useState<number>((new Date()).getTime());
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const getCaptcha = () => {
-        outerService.captcha().then(res => {
-            if (res.code === 200) {
-                const svgContent = res.data as string;
-                setCaptchaContent(svgContent);
-            }
-        });
-    }
 
     const loginIn = async (loginForm: ILogin.ReqLoginForm) => {
 
         try {
 
             setFormEnable(false);
-
-            //md5加密
-            console.log(loginForm.passwd);
             loginForm.passwd = md5(loginForm.passwd);
-            console.log(loginForm.passwd);
 
             //提交
             const res = await outerService.login(loginForm);
             if (res.code === 200) {
                 const token = res.data?.token;
-                console.log(res);
-                console.log(res.data)
-                console.log(token);
                 dispatch(setToken(token || ""));
                 message.success("登录成功!");
                 setTimeout(() => {
@@ -48,7 +34,7 @@ export default function Login() {
                 }, 1000);
             }
             else {
-                getCaptcha();
+                setTimespan((new Date()).getTime());
                 message.error(res.msg);
             }
 
@@ -58,10 +44,6 @@ export default function Login() {
         }
 
     }
-
-    useEffect(() => {
-        getCaptcha();
-    }, []);
 
     return (
         <>
@@ -111,7 +93,7 @@ export default function Login() {
                                         <Input />
                                     </Col>
                                     <Col span={12}>
-                                        <section onClick={() => { getCaptcha(); }} dangerouslySetInnerHTML={{ __html: captchaContent }}></section>
+                                        <Captcha reflash={timespan} />
                                     </Col>
                                 </Row>
                             </Form.Item>

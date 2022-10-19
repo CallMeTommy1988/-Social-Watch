@@ -16,3 +16,22 @@
 .loginSection h2 {
   text-align: center;
 }
+
+.registerSection {
+width: 100%;
+}
+
+.registerSection .content {
+  margin: 0 auto;
+  width: 80%;
+  margin-top: 30px;
+}
+
+.registerSection .content .registerStep {
+  margin: 50px 0;
+}
+
+.registerSection .content .outletContent {
+  margin: 0 auto;
+  width: 80%
+}
