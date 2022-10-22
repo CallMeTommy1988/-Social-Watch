@@ -1,36 +1,42 @@
 
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Login from "../components/Login";
-import RegisterWorkFlow from "../components/Register"
 import RegisterForm from "../components/Register/register.form"
-import RegisterSuccessForm from "../components/Register/success";
 import RegisterFinishForm from "../components/Register/finish"
+import Forget from "../components/Forget";
+import ForgetFinish from "../components/Forget/finish";
+import OuterIndex from "../components/common/outer";
+import SuccessCommon from "../components/common/success";
 
 export const router = createBrowserRouter([
     {
-        path: "/login",
-        element: <Login />
-    },
-    {
-        path: "/reg",
-        element: <RegisterWorkFlow />,
+        path: "/",
+        element: <OuterIndex />,
         children: [
             {
-                path: '',
-                element: <Navigate to="info" />
+                path: 'login',
+                element: <Login />
             },
             {
-                path: 'info',
+                path: 'reg',
                 element: <RegisterForm />
             },
             {
-                path: 'success',
-                element: <RegisterSuccessForm />
+                path: 'reg/finish',
+                element: <RegisterFinishForm />
             },
             {
-                path: 'finish',
-                element: <RegisterFinishForm />
-            }
+                path: 'forget',
+                element: <Forget />
+            },
+            {
+                path: 'forget/finish',
+                element: <ForgetFinish />
+            },
+            {
+                path: 'result/success',
+                element: <SuccessCommon />
+            },
         ]
     }
 ])

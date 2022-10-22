@@ -1,53 +1,55 @@
-import { Col, Row, Button, Form, Input, Space, message } from 'antd';
-import md5 from "js-md5";
+import { Col, Row, Button, Form, Input, Space, message, Divider } from 'antd';
+import md5 from "js-md5"
+import { useNavigate, Link } from "react-router-dom"
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../redux/reducer/user';
 import { useState } from 'react';
 import * as outerService from "api/modules/outer"
-import { useNavigate } from 'react-router';
-import { IRegister } from '@/api/interface';
-import Captcha from '../common/captcha'
-import { Link } from 'react-router-dom';
+import { IForget, ILogin } from '@/api/interface';
+import Captcha from '../common/captcha';
 
-const RegisterForm = () => {
 
-    const navigate = useNavigate();
+export default function Login() {
+
     const [formEnable, setFormEnable] = useState<boolean>(true);
     const [timespan, setTimespan] = useState<number>((new Date()).getTime());
+    const navigate = useNavigate();
 
-    const registerForm = async (registerForm: IRegister.ReqRegisterForm) => {
+    const forgetPwd = async (forgetForm: IForget.ReqForgetForm) => {
 
         try {
-            setFormEnable(false);
-            registerForm.passwd = md5(registerForm.passwd);
 
-            outerService.reg(registerForm).then(res => {
-                navigate("/result/success", {
-                    state: {
-                        title: "只差一步就注册成功了",
-                        subTitle: "请前往邮箱点击注册链接完成注册"
-                    },
-                    replace: true
-                });
+            setFormEnable(false);
+
+            outerService.forgetPasswd(forgetForm).then(res => {
+                setTimeout(() => {
+                    navigate("/result/success", { state: { title: "忘记密码邮件发送成功", subTitle: "如果没有收到, 请重新开始流程" } });
+                }, 1000);
             }, reject => {
                 setTimespan((new Date()).getTime());
-                //registerForm.captcha = "";
+                //forgetForm.captcha = "";
             })
+
         }
         catch (ex) {
-            console.log(ex);
+            console.error(ex);
         }
         finally {
             setFormEnable(true);
         }
+
     }
 
     return (
         <>
-            <section className='outerForm'>
-                <h1>注册</h1>
+            <section className="outerForm">
+
+                <h1>忘记密码</h1>
+
                 <Form
                     name="basic"
                     layout="vertical"
-                    onFinish={registerForm}
+                    onFinish={forgetPwd}
                     disabled={!formEnable}
                 >
                     <Form.Item
@@ -65,29 +67,6 @@ const RegisterForm = () => {
                         ]}
                     >
                         <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="密码"
-                        name="passwd"
-                        rules={[{ required: true, message: '请输入密码!' }]}
-                    >
-                        <Input.Password />
-                    </Form.Item>
-                    <Form.Item
-                        label="重复密码"
-                        name="repeatPasswd"
-                        rules={[
-                            ({ getFieldValue }) => ({
-                                validator(rule, value) {
-                                    if (!value || getFieldValue('passwd') === value) {
-                                        return Promise.resolve()
-                                    }
-                                    return Promise.reject("两次密码输入不一致")
-                                }
-                            })
-                        ]}
-                    >
-                        <Input.Password />
                     </Form.Item>
                     <Form.Item
                         label="验证码"
@@ -108,15 +87,15 @@ const RegisterForm = () => {
                     <Form.Item>
                         <Space>
                             <Button type="primary" htmlType="submit">
-                                注册
+                                发送邮件
                             </Button>
-                            <Link to="/login">返回登录</Link>
+                            <Link to="/login">登录?</Link>
                         </Space>
                     </Form.Item>
+                    <Divider />
                 </Form>
             </section>
         </>
     );
-}
 
-export default RegisterForm;
+}

@@ -1,4 +1,5 @@
 import { user } from "../../api/interface/user"
+import { ICommon } from "../../api/interface/common"
 
 // * 请求响应参数(不包含data)
 export interface Result {
@@ -44,6 +45,18 @@ export namespace ILogin {
 export namespace IRegister {
     export interface ReqRegisterForm {
         email: string;
+        passwd: string;
+        captcha: string;
+    }
+}
+
+export namespace IForget {
+	export interface ReqForgetForm {
+		email: string,
+		captcha: string
+	}
+
+	export interface ReqForgetPwdForm extends ICommon.DecryptionTimeSpan {
         passwd: string;
         captcha: string;
     }

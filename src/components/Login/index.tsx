@@ -1,6 +1,6 @@
-import { Col, Row, Button, Form, Input, Space, message } from 'antd';
+import { Col, Row, Button, Form, Input, Space, message, Divider } from 'antd';
 import md5 from "js-md5"
-import { useNavigate } from "react-router"
+import { useNavigate, Link } from "react-router-dom"
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/reducer/user';
 import { useState } from 'react';
@@ -32,10 +32,11 @@ export default function Login() {
                 }, 1000);
             }, reject => {
                 setTimespan((new Date()).getTime());
+                //loginForm.captcha = "";
             })
 
         }
-        catch(ex) {
+        catch (ex) {
             console.error(ex);
         }
         finally {
@@ -46,73 +47,69 @@ export default function Login() {
 
     return (
         <>
-            <Row className="outerBody">
-                <Col className="loginSection">
-                    <h2>登录</h2>
-                    <section className="loginForm">
-                        <Form
-                            name="basic"
-                            labelCol={{ span: 4 }}
-                            wrapperCol={{ span: 20 }}
-                            layout="horizontal"
-                            onFinish={loginIn}
-                            disabled={!formEnable}
-                        >
-                            <Form.Item
-                                label="邮箱"
-                                name="email"
-                                rules={[
-                                    {
-                                        type: 'email',
-                                        message: '请输入正确的邮箱',
-                                    },
-                                    {
-                                        required: true,
-                                        message: '请输入正确的邮箱',
-                                    }
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                label="密码"
-                                name="passwd"
-                                rules={[{ required: true, message: '请输入密码!' }]}
-                            >
-                                <Input.Password />
-                            </Form.Item>
-                            <Form.Item
-                                label="验证码"
-                                name="captcha"
-                                rules={[{ required: true, message: '请输入验证码' }]}
-                                extra="我要确认是你不是机器人."
-                            >
-                                <Row gutter={8}>
-                                    <Col span={12}>
-                                        <Input />
-                                    </Col>
-                                    <Col span={12}>
-                                        <Captcha reflash={timespan} />
-                                    </Col>
-                                </Row>
-                            </Form.Item>
+            <section className="loginForm outerForm">
 
-                            <Form.Item wrapperCol={{ span: 14, offset: 4 }}>
-                                <Space>
-                                    <Button type="primary" htmlType="submit">
-                                        登录
-                                    </Button>
-                                    <Button type="default" onClick={() => {
-                                        navigate("/reg");
-                                    }}>
-                                        注册
-                                    </Button>
-                                </Space>
-                            </Form.Item>
-                        </Form>
-                    </section>
-                </Col>
-            </Row>
+                <h1>登录</h1>
+
+                <Form
+                    name="basic"
+                    layout="vertical"
+                    onFinish={loginIn}
+                    disabled={!formEnable}
+                >
+                    <Form.Item
+                        label="邮箱"
+                        name="email"
+                        rules={[
+                            {
+                                type: 'email',
+                                message: '请输入正确的邮箱',
+                            },
+                            {
+                                required: true,
+                                message: '请输入正确的邮箱',
+                            }
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="密码"
+                        name="passwd"
+                        rules={[{ required: true, message: '请输入密码!' }]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
+                    <Form.Item
+                        label="验证码"
+                        name="captcha"
+                        rules={[{ required: true, message: '请输入验证码' }]}
+                        extra="我要确认是你不是机器人."
+                    >
+                        <Row gutter={8}>
+                            <Col span={12}>
+                                <Input />
+                            </Col>
+                            <Col span={12}>
+                                <Captcha reflash={timespan} />
+                            </Col>
+                        </Row>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Space>
+                            <Button type="primary" htmlType="submit">
+                                登录
+                            </Button>
+                            <Link to="/forget">忘记密码?</Link>
+                        </Space>
+                    </Form.Item>
+                    <Divider />
+                    <p>
+                        还没有账号? 点击<Link to="/reg">注册</Link>
+                    </p>
+                </Form>
+            </section>
         </>
     );
 

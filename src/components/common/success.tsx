@@ -1,16 +1,19 @@
 import { Result, Button } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Success = () => {
 
     const navigate = useNavigate();
 
+    const Stateparams = useLocation()
+    const { title, subTitle } = Stateparams.state
+
     return (
         <>
             <Result
                 status="success"
-                title="注册成功，请到邮件检查注册邮件"
-                subTitle="如果没有收到邮件，请登录或者忘记密码"
+                title={title || "成功"}
+                subTitle={subTitle}
                 extra={[
                     <Button type="primary" onClick={() => { navigate("/login") }} key="console">
                         回到登录

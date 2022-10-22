@@ -1,6 +1,81 @@
-body  {}
+body {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
 
-.outerBody {
+/* 修改antd原生样式 */
+
+input {
+  border-radius: 4px !important;
+}
+
+.ant-form-vertical {
+  padding-bottom: 0px !important;
+}
+
+.ant-btn-primary {
+  background: #524175 !important;
+}
+
+
+/* 布局样式 */
+
+.main {
+  width: 55%;
+  margin: 0 auto;
+}
+
+.outer_content {
+  width: 350px;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
+footer .ant-divider {
+  margin: 12px 0;
+}
+
+@media only screen and (max-width: 1440px) {
+
+  .main {
+    width: 65%;
+  }
+
+  .outer_content {
+    width: 350px;
+  }
+
+}
+
+@media only screen and (max-width: 700px) {
+
+  .main {
+    width: 95%;
+  }
+
+  .outer_content {
+    width: 100%;
+  }
+
+}
+
+.outerForm h1 {
+  color: #524175;
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+.header_outer h1 {
+  text-align: center;
+  color: #999;
+}
+
+.header_outer .dividers {
+  margin: 10px 0;
+  color: #524175;
+}
+
+/* .outerBody {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,7 +95,7 @@ body  {}
 }
 
 .registerSection {
-width: 100%;
+  width: 100%;
 }
 
 .registerSection .content {
@@ -35,4 +110,4 @@ width: 100%;
 
 .registerSection .content .outletContent {
   margin: 0 auto;
-}
+} */

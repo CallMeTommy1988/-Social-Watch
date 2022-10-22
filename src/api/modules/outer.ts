@@ -1,7 +1,7 @@
 import http from "..";
 import { outer } from "../config/serviceName";
 import { ICommon } from "../../api/interface/common";
-import { ILogin, IRegister } from "../interface";
+import { IForget, ILogin, IRegister } from "../interface";
 
 export const login = (params: ILogin.ReqLoginForm) => {
     return http.post<ILogin.ResLogin>(`${outer}/login`, params);
@@ -19,4 +19,12 @@ export const regVaild = (params: ICommon.DecryptionTimeSpan) => {
 // 目前直接返回链接就可以了
 export const captcha = () => {
     return http.get<string>(`${outer}/captcha`);
+}
+
+export const forgetPasswd = (params: IForget.ReqForgetForm) => {
+    return http.post(`${outer}/forget/${params.email}`, { captcha: params.captcha });
+}
+
+export const forgetPasswdConfirm = (params: IForget.ReqForgetPwdForm) => {
+    return http.post(`${outer}/update/passwd`, params);
 }
