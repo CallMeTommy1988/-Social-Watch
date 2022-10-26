@@ -25,6 +25,19 @@ input {
   margin: 0 auto;
 }
 
+.main_content {
+  padding: 10px 20px;
+  float: left;
+}
+
+.header_main h1 {
+  display: inline;
+}
+
+.header_main .ant-divider-horizontal {
+  margin: 10px 0 20px 0;
+}
+
 .outer_content {
   width: 350px;
   margin: 0 auto;

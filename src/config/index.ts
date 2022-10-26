@@ -1,7 +1,7 @@
 let config = {
 
     api: {
-        baseUrl: "http://127.0.0.1:3001"
+        baseUrl: "http://192.168.2.13:3001"
     }
 
 }

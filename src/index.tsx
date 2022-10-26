@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { store } from "./redux/index"
 import { Provider } from "react-redux";
-import { router } from "./routes/index"
-import { RouterProvider } from "react-router-dom";
+import Router from "./routes/index"
+import { BrowserRouter } from "react-router-dom";
+import AuthRoute from "./routes/authRoute"
 import 'antd/dist/antd.css';
 import 'index.css';
 
@@ -15,7 +16,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <AuthRoute>
+          <Router />
+        </AuthRoute>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
