@@ -7,7 +7,7 @@ const OuterIndex = () => {
     return (
         <>
             <div className="main">
-                <HeaderView mode="outer" />
+                <HeaderView />
                 <section className="outer_content">
                     <Outlet />
                 </section>

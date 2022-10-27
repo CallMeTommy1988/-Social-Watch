@@ -26,7 +26,8 @@ const login = createAsyncThunk(
   }
 );
 
-const fetchCurrentUser = createAsyncThunk(fetchUserType, async () => {
+export const fetchCurrentUser = createAsyncThunk(fetchUserType, async () => {
+  debugger;
   const res = await userService.fetchCurrentUser();
   return res;
 });
@@ -43,6 +44,7 @@ const initialState: userState = {
   user: undefined,
   token: "",
 };
+
 export const user = createSlice({
   name: name,
   initialState: initialState,
@@ -51,6 +53,9 @@ export const user = createSlice({
       state.user = action.payload;
     },
     addToken: (state: userState, action) => {
+      console.log(`------ add Token by addToken function ------`);
+      console.log(state.token);
+      console.log(state.user);
       state.token = action.payload;
     },
   },
@@ -84,16 +89,11 @@ export const selectorUserToken = (state: userState) => {
   if (!token) return "";
 
   state.token = token;
-  return token;
+  return state.token;
 };
 
 export const selectorUser = (state: userState) => {
   return state.user;
 };
-
-export const getUser = createSelector(
-  [selectorUserToken, selectorUser],
-  (token: string, user) => {}
-);
 
 export default user.reducer;

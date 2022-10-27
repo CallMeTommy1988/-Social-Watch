@@ -32,7 +32,6 @@ export default function Login() {
                 }, 1000);
             }, reject => {
                 setTimespan((new Date()).getTime());
-                //loginForm.captcha = "";
             })
 
         }

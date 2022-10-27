@@ -10,10 +10,14 @@ const Captcha = function (props: { reflash?: number }) {
                 const svgContent = res.data as string;
                 setCaptchaContent(svgContent);
             }
-        });
+        }, reject => {
+            console.error("验证码错误")
+            console.error(reject);
+        })
     }
 
     useEffect(() => {
+        console.log(`验证码刷新useEffect`)
         getCaptcha();
     }, [props.reflash]);
 
