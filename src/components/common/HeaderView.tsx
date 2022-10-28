@@ -1,15 +1,21 @@
 import { selectorUserToken } from '../../redux/reducer/user';
 import { Divider, Row, Col } from 'antd';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderView = () => {
 
-    const cName = `header header_outer`;
+    
     const token = useSelector(selectorUserToken);
+    const cName = `header header_outer`;
+    const naviagete = useNavigate();
 
     if (!!token) {
-        return Navigate({ to: "/main", replace: true });
+        console.log("有token，跳转到 main");
+        setTimeout(() => {
+            naviagete("/main", { replace: true });    
+        }, 100);
+        
     }
 
     return (

@@ -1,4 +1,4 @@
-import { useLocation, Navigate } from "react-router";
+import { useLocation, Navigate } from "react-router-dom";
 import whiteList from "./config";
 import { selectorUserToken } from "../redux/reducer/user"
 import { useSelector } from "react-redux";
@@ -10,6 +10,7 @@ const AuthRouter = (props: { children: JSX.Element }) => {
 
     console.log(`-------------AuthRouter-------------`);
     console.log("pathname:", pathname);
+    
     const token = useSelector(selectorUserToken);
     if (whiteList.includes(pathname)) {
         return props.children;

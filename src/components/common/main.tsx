@@ -14,6 +14,7 @@ const OuterIndex = () => {
     const dispatch = useDispatch();
 
     const getCurUser = useCallback(() => {
+        console.log(getCurUser);
         dispatch(fetchCurrentUser());
     }, [dispatch]);
 

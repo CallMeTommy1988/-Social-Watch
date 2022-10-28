@@ -6,6 +6,4 @@ export const store = configureStore({
         user: userSlice
     },
     devTools: true
-})
-
-store.dispatch()
+});

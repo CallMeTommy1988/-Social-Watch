@@ -1,9 +1,5 @@
 import md5 from "js-md5";
-import {
-  createSlice,
-  createAsyncThunk,
-  createSelector,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as outerService from "../../api/modules/outer";
 import * as userService from "../../api/modules/user";
 import { ILogin } from "../../api/interface";
@@ -54,7 +50,7 @@ export const user = createSlice({
     addToken: (state: userState, action) => {
       console.log("addToken state:", state);
       state.token = action.payload;
-      //localSet(tokenKey, action.payload);
+      localSet(tokenKey, action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -76,14 +72,22 @@ export const user = createSlice({
 
 export const { addUser, addToken } = user.actions;
 
-export const selectorUserToken = (state: { user: userState  }) => {
+export const selectorUserToken = (state: { user: userState }) => {
   console.log(`selectorUserToken state:`, state.user.token);
-  return state.user.token;
+
+  if (!!state.user && !!state.user.token) return state.user.token;
+
+  let token = localGet(tokenKey);
+  if (!token) return "";
+
+  user.actions.addToken(token);
+
+  return token;
 };
 
-export const selectorUser = (state: userState) => {
+export const selectorUser = (state: { user: userState }) => {
   console.log(`selectorUser state:`, state);
-  return state.user;
+  return state.user.user;
 };
 
 export default user.reducer;
