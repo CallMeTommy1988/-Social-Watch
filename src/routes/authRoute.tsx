@@ -8,15 +8,14 @@ const AuthRouter = (props: { children: JSX.Element }) => {
 
     const { pathname } = useLocation();
 
+    console.log(`-------------AuthRouter-------------`);
+    console.log("pathname:", pathname);
     const token = useSelector(selectorUserToken);
-    console.log(`--------路由信息 ${pathname}--------`)
     if (whiteList.includes(pathname)) {
-        console.log(`---------白名单---------`);
         return props.children;
     }
 
     if (!!token) {
-        console.log(`---------有token---------`);
         return props.children;
     }
     else {

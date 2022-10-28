@@ -1,9 +1,9 @@
 import { Divider, Row, Col, Dropdown, Menu } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { fetchCurrentUser, selectorUser } from "../../redux/reducer/user"
-import { Navigate } from "react-router";
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { selectorUser } from '../../redux/reducer/user';
 
 const menu = (
     <Menu
@@ -29,28 +29,17 @@ const menu = (
 
 
 const HeaderView = () => {
-
     const cName = `header header_main`;
     const user = useSelector(selectorUser);
-    const dispatch = useDispatch();
-
-    const getCurUser = () => {
-        dispatch(fetchCurrentUser);
-    };
-
-    if (!user || !user.id) {
-        getCurUser();
-    }
-
-
 
     return (
         <>
             <header className={cName}>
+                <Link to="/login">去登录</Link>
                 <Row>
                     <Col span={12}><h1>Subject Watch</h1></Col>
                     <Col span={12} style={{ textAlign: "right", marginTop: "8px" }}>
-                        <Dropdown.Button overlay={menu} icon={<UserOutlined />}></Dropdown.Button>
+                        <Dropdown.Button overlay={menu} icon={<UserOutlined />}>{user?.email}</Dropdown.Button>
                     </Col>
                 </Row>
                 <Divider className="dividers" />

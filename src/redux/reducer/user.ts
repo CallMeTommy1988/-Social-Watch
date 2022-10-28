@@ -27,7 +27,6 @@ const login = createAsyncThunk(
 );
 
 export const fetchCurrentUser = createAsyncThunk(fetchUserType, async () => {
-  debugger;
   const res = await userService.fetchCurrentUser();
   return res;
 });
@@ -36,7 +35,6 @@ export const setToken = createAsyncThunk(
   setTokenType,
   (payload: string, action) => {
     action.dispatch(user.actions.addToken(payload));
-    localSet(tokenKey, payload);
   }
 );
 
@@ -50,21 +48,22 @@ export const user = createSlice({
   initialState: initialState,
   reducers: {
     addUser: (state: userState, action) => {
+      console.log("addUser state:", state);
       state.user = action.payload;
     },
     addToken: (state: userState, action) => {
-      console.log(`------ add Token by addToken function ------`);
-      console.log(state.token);
-      console.log(state.user);
+      console.log("addToken state:", state);
       state.token = action.payload;
+      //localSet(tokenKey, action.payload);
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state: userState, action) => {
         if (action.payload.code === 200 && !!action.payload.data?.token) {
+          console.log(`login.fulfilled state:`, state);
           state.token = action.payload.data.token;
-          localSet(tokenKey, state.token);
+          console.log(`login.fulfilled after set state:`, state);
         }
       })
       .addCase(fetchCurrentUser.fulfilled, (state: userState, action) => {
@@ -77,22 +76,13 @@ export const user = createSlice({
 
 export const { addUser, addToken } = user.actions;
 
-export const selectorUserToken = (state: userState) => {
-  if (!!state.token) return state.token;
-
-  console.log(`获取token`);
-  console.log(state);
-  console.log(`获取本地存储`);
-  console.log(`key`, tokenKey);
-  let token = localGet(tokenKey);
-  console.log(`实际token`, token);
-  if (!token) return "";
-
-  state.token = token;
-  return state.token;
+export const selectorUserToken = (state: { user: userState  }) => {
+  console.log(`selectorUserToken state:`, state.user.token);
+  return state.user.token;
 };
 
 export const selectorUser = (state: userState) => {
+  console.log(`selectorUser state:`, state);
   return state.user;
 };
 

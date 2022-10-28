@@ -101,6 +101,7 @@ export default function Login() {
                                 登录
                             </Button>
                             <Link to="/forget">忘记密码?</Link>
+                            <Link to="/main">到主页</Link>
                         </Space>
                     </Form.Item>
                     <Divider />
