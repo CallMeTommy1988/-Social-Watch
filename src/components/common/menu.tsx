@@ -30,7 +30,7 @@ const items: MenuProps['items'] = [
 const mainMenuList = () => {
     return (
         <Menu
-            defaultSelectedKeys={['0']}
+            defaultSelectedKeys={['1']}
             defaultOpenKeys={['about']}
             mode="inline"
             items={items}

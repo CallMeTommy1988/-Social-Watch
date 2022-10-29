@@ -1,36 +1,23 @@
-import { Divider, Row, Col, Dropdown, Menu } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Divider, Row, Col, Button, Dropdown, Menu, Space } from 'antd';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { selectorUser } from '../../redux/reducer/user';
-
-const menu = (
-    <Menu
-        items={[
-            {
-                label: '1st menu item',
-                key: '1',
-                icon: <UserOutlined />,
-            },
-            {
-                label: '2nd menu item',
-                key: '2',
-                icon: <UserOutlined />,
-            },
-            {
-                label: '3rd menu item',
-                key: '3',
-                icon: <UserOutlined />,
-            },
-        ]}
-    />
-);
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { selectorUser, addToken, addUser } from '../../redux/reducer/user';
 
 const HeaderView = () => {
     const cName = `header header_main`;
     const user = useSelector(selectorUser);
+    const dispatch = useDispatch();
+    const [loginOutDisable, setLoginOutDisable] = useState(false)
+
+    const loginOut = () => {
+        setLoginOutDisable(true);
+
+        dispatch(addToken(""));
+        dispatch(addUser(undefined));
+
+        setLoginOutDisable(false);
+    }
 
     return (
         <>
@@ -39,7 +26,9 @@ const HeaderView = () => {
                 <Row>
                     <Col span={12}><h1>Subject Watch</h1></Col>
                     <Col span={12} style={{ textAlign: "right", marginTop: "8px" }}>
-                        <Dropdown.Button overlay={menu} icon={<UserOutlined />}>{user?.email}</Dropdown.Button>
+                        <Space>
+                            {user?.email} <Button type="link" onClick={loginOut} disabled={loginOutDisable}>退出</Button>
+                        </Space>
                     </Col>
                 </Row>
                 <Divider className="dividers" />

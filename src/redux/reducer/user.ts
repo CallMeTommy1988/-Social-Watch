@@ -44,11 +44,9 @@ export const user = createSlice({
   initialState: initialState,
   reducers: {
     addUser: (state: userState, action) => {
-      console.log("addUser state:", state);
       state.user = action.payload;
     },
     addToken: (state: userState, action) => {
-      console.log("addToken state:", state);
       state.token = action.payload;
       localSet(tokenKey, action.payload);
     },
@@ -57,23 +55,20 @@ export const user = createSlice({
     builder
       .addCase(login.fulfilled, (state: userState, action) => {
         if (action.payload.code === 200 && !!action.payload.data?.token) {
-          console.log(`login.fulfilled state:`, state);
           state.token = action.payload.data.token;
-          console.log(`login.fulfilled after set state:`, state);
         }
       })
       .addCase(fetchCurrentUser.fulfilled, (state: userState, action) => {
         if (action.payload.code === 200 && !!action.payload.data?.user) {
           state.user = action.payload.data.user;
         }
-      });
+      })
   },
 });
 
 export const { addUser, addToken } = user.actions;
 
 export const selectorUserToken = (state: { user: userState }) => {
-  console.log(`selectorUserToken state:`, state.user.token);
 
   if (!!state.user && !!state.user.token) return state.user.token;
 
@@ -81,7 +76,6 @@ export const selectorUserToken = (state: { user: userState }) => {
   if (!token) return "";
 
   user.actions.addToken(token);
-
   return token;
 };
 

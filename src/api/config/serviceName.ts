@@ -1,2 +1,2 @@
 export const outer = "/out/api";
-export const internal = "/api"
+export const internal = "/inline/api"

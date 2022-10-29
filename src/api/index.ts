@@ -7,7 +7,7 @@ import { checkStatus } from "../api/helper/checkStatus";
 import { AxiosCanceler } from "../api/helper/axiosCancel";
 import { message } from "antd";
 import systemCofnig from "../config";
-import { localGet } from "../utils/util";
+import { localGet, localRemove } from "../utils/util";
 import { tokenKey } from "../redux/reducer/user"
 
 const axiosCanceler = new AxiosCanceler();
@@ -38,7 +38,7 @@ class RequestHttp {
 
 				const token: string = localGet(tokenKey);
 				if (!!token) {
-					return { ...config, headers: { ...config.headers, "authorization": token } };
+					return { ...config, headers: { ...config.headers, "authorization": `Bearer ${token}` } };
 				}
 				else {
 					return { ...config, headers: { ...config.headers } };
@@ -63,7 +63,10 @@ class RequestHttp {
 				// * 登录失效（code == 599）
 				if (data.code === ResultEnum.OVERDUE) {
 					message.error(data.msg);
-					window.location.hash = "/login";
+					localRemove(tokenKey);
+
+					//临时这样
+					//window.location.href = "/login";
 					return Promise.reject(data);
 				}
 				// * 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）

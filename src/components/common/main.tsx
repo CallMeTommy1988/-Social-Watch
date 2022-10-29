@@ -27,12 +27,12 @@ const OuterIndex = () => {
             <div className="main">
                 {<>
                     <HeaderMain />
-                    <section className="main_content">
+                    <section style={{ width: `100%`, padding: "20px" }}>
                         <Row>
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Col xs={24} sm={24} md={6} lg={5} xl={4} xxl={4} style={{ marginBottom: "20px" }}>
                                 <MainMenu />
                             </Col>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
+                            <Col xs={24} sm={24} md={18} lg={19} xl={20} xxl={20}>
                                 <section className="main_content">
                                     <Outlet />
                                 </section>
