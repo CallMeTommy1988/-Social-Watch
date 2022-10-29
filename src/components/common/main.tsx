@@ -25,7 +25,7 @@ const OuterIndex = () => {
     return (
         <>
             <div className="main">
-                {<>
+                {( !!user && !!user.id ) && <>
                     <HeaderMain />
                     <section style={{ width: `100%`, padding: "20px" }}>
                         <Row>

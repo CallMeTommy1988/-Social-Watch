@@ -5,6 +5,10 @@ import React from 'react';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
+const menuClick: MenuProps['onClick'] = e => {
+    
+}
+
 function getItem(
     label: React.ReactNode,
     key: React.Key,
@@ -30,8 +34,8 @@ const items: MenuProps['items'] = [
 const mainMenuList = () => {
     return (
         <Menu
+            onClick={menuClick}
             defaultSelectedKeys={['1']}
-            defaultOpenKeys={['about']}
             mode="inline"
             items={items}
         />

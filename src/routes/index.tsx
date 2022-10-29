@@ -9,6 +9,7 @@ import OuterIndex from "../components/common/outer";
 import MainIndex from "../components/common/main";
 import SuccessCommon from "../components/common/success";
 import About from "../components/about";
+import WatchList from "../components/watchlist";
 
 
 const rootRouter = [
@@ -49,6 +50,14 @@ const rootRouter = [
             {
                 path: "main",
                 element: <About />
+            },
+            {
+                path: 'about',
+                Element: <About />
+            },
+            {
+                path: 'watchlist',
+                Element: <WatchList />
             }
         ]
     }
