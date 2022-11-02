@@ -28,7 +28,7 @@ export default function Login() {
                 dispatch(setToken(token || ""));
                 message.success("登录成功!");
                 setTimeout(() => {
-                    navigate("/main");
+                    navigate("/about");
                 }, 1000);
             }, reject => {
                 setTimespan((new Date()).getTime());
@@ -52,7 +52,7 @@ export default function Login() {
 
                 <Form
                     name="basic"
-                    layout="vertical"
+                    layout="horizontal"
                     onFinish={loginIn}
                     disabled={!formEnable}
                 >
@@ -101,7 +101,6 @@ export default function Login() {
                                 登录
                             </Button>
                             <Link to="/forget">忘记密码?</Link>
-                            <Link to="/main">到主页</Link>
                         </Space>
                     </Form.Item>
                     <Divider />
@@ -113,4 +112,4 @@ export default function Login() {
         </>
     );
 
-}
+} 

@@ -5,11 +5,10 @@ import MainMenu from "./menu";
 import { Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useCallback } from "react";
-import { fetchCurrentUser, selectorUser, selectorUserToken } from "../../redux/reducer/user"
+import { fetchCurrentUser, selectorUserToken } from "../../redux/reducer/user"
 
 const OuterIndex = () => {
 
-    const user = useSelector(selectorUser);
     const token = useSelector(selectorUserToken);
     const dispatch = useDispatch();
 
@@ -25,7 +24,7 @@ const OuterIndex = () => {
     return (
         <>
             <div className="main">
-                {( !!user && !!user.id ) && <>
+                <>
                     <HeaderMain />
                     <section style={{ width: `100%`, padding: "20px" }}>
                         <Row>
@@ -40,7 +39,7 @@ const OuterIndex = () => {
                         </Row>
                     </section>
                     <Footer />
-                </>}
+                </>
             </div>
         </>
     )

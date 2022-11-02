@@ -13,7 +13,7 @@ const HeaderView = () => {
     if (!!token) {
         console.log("有token，跳转到 main");
         setTimeout(() => {
-            naviagete("/main", { replace: true });    
+            naviagete("/about", { replace: true });    
         }, 100);
         
     }

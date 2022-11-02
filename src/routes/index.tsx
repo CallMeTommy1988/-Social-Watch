@@ -1,5 +1,8 @@
+import {
+    Routes,
+    Route
+} from "react-router-dom";
 
-import { createBrowserRouter, useRoutes } from "react-router-dom";
 import Login from "../components/Login";
 import RegisterForm from "../components/Register/register.form"
 import RegisterFinishForm from "../components/Register/finish"
@@ -9,65 +12,29 @@ import OuterIndex from "../components/common/outer";
 import MainIndex from "../components/common/main";
 import SuccessCommon from "../components/common/success";
 import About from "../components/about";
-import WatchList from "../components/watchlist";
+import WatchList from "../components/subject";
+import WatchAdd from "../components/subject/add";
 
+export default function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<OuterIndex />}>
+                <Route index element={<Login />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/reg" element={<RegisterForm />} />
+                <Route path="/reg/finish" element={<RegisterFinishForm />} />
+                <Route path="/forget" element={<Forget />} />
+                <Route path="forget/finish" element={<ForgetFinish />} />
+                <Route path="result/success" element={<SuccessCommon />} />
+            </Route>
+            <Route path="/" element={<MainIndex />}>
+                <Route index element={<About />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/watch" element={<WatchList />} />
+                <Route path="/watch/add" element={<WatchAdd />} />
+            </Route>
+        </Routes>
+    );
+}
 
-const rootRouter = [
-    {
-        path: "/",
-        element: <OuterIndex />,
-        children: [
-            {
-                path: 'login',
-                element: <Login />
-            },
-            {
-                path: 'reg',
-                element: <RegisterForm />
-            },
-            {
-                path: 'reg/finish',
-                element: <RegisterFinishForm />
-            },
-            {
-                path: 'forget',
-                element: <Forget />
-            },
-            {
-                path: 'forget/finish',
-                element: <ForgetFinish />
-            },
-            {
-                path: 'result/success',
-                element: <SuccessCommon />
-            },
-        ]
-    },
-    {
-        path: "/",
-        element: <MainIndex />,
-        children: [
-            {
-                path: "main",
-                element: <About />
-            },
-            {
-                path: 'about',
-                Element: <About />
-            },
-            {
-                path: 'watchlist',
-                Element: <WatchList />
-            }
-        ]
-    }
-]
-
-//export const router = createBrowserRouter(routes)
-
-const Router = () => {
-    const routes = useRoutes(rootRouter);
-    return routes;
-};
-
-export default Router;
+//export default Router;
